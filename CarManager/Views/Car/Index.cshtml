@@ -1,0 +1,52 @@
+﻿@model IEnumerable<CarManager.Models.Car>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Make", "Index", new { sortOrder = ViewBag.MakeSortParam })
+        </th>
+        <th>
+            @Html.ActionLink("Model", "Index", new { sortOrder = ViewBag.ModelSortParam })
+        </th>
+        <th>
+            @Html.ActionLink("Colour", "Index", new { sortOrder = ViewBag.ColourSortParam })
+        </th>
+        <th>
+            @Html.ActionLink("Engine Size", "Index", new { sortOrder = ViewBag.EngineSortParam })
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CarMake.MakeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CarModel.ModelName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Colour.ColourName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CarEngine)
+        </td>
+
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.CarID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.CarID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.CarID })
+        </td>
+    </tr>
+}
+
+</table>

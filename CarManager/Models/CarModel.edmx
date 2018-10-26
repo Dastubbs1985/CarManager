@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CarManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Car">
+          <Key>
+            <PropertyRef Name="CarID" />
+          </Key>
+          <Property Name="CarID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="_fk_CarModel" Type="int" Nullable="false" />
+          <Property Name="_fk_CarMake" Type="int" Nullable="false" />
+          <Property Name="_fk_CarColour" Type="int" Nullable="false" />
+          <Property Name="CarEngine" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarMakes">
+          <Key>
+            <PropertyRef Name="MakeID" />
+          </Key>
+          <Property Name="MakeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MakeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarModels">
+          <Key>
+            <PropertyRef Name="ModelID" />
+          </Key>
+          <Property Name="ModelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModelName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Colour">
+          <Key>
+            <PropertyRef Name="ColourID" />
+          </Key>
+          <Property Name="ColourID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ColourName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Car_CarModel">
+          <End Role="CarModels" Type="Self.CarModels" Multiplicity="1" />
+          <End Role="Car" Type="Self.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarModels">
+              <PropertyRef Name="ModelID" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="_fk_CarModel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Car_ToTable">
+          <End Role="CarMakes" Type="Self.CarMakes" Multiplicity="1" />
+          <End Role="Car" Type="Self.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarMakes">
+              <PropertyRef Name="MakeID" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="_fk_CarMake" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Car_ToTable_1">
+          <End Role="Colour" Type="Self.Colour" Multiplicity="1" />
+          <End Role="Car" Type="Self.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Colour">
+              <PropertyRef Name="ColourID" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="_fk_CarColour" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CarManagerModelStoreContainer">
+          <EntitySet Name="Car" EntityType="Self.Car" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarMakes" EntityType="Self.CarMakes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarModels" EntityType="Self.CarModels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Colour" EntityType="Self.Colour" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Car_CarModel" Association="Self.FK_Car_CarModel">
+            <End Role="CarModels" EntitySet="CarModels" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Car_ToTable" Association="Self.FK_Car_ToTable">
+            <End Role="CarMakes" EntitySet="CarMakes" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Car_ToTable_1" Association="Self.FK_Car_ToTable_1">
+            <End Role="Colour" EntitySet="Colour" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CarManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Car">
+          <Key>
+            <PropertyRef Name="CarID" />
+          </Key>
+          <Property Name="CarID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_fk_CarModel" Type="Int32" Nullable="false" />
+          <Property Name="C_fk_CarMake" Type="Int32" Nullable="false" />
+          <Property Name="C_fk_CarColour" Type="Int32" Nullable="false" />
+          <Property Name="CarEngine" Type="Double" Nullable="false" />
+          <NavigationProperty Name="CarModel" Relationship="Self.FK_Car_CarModel" FromRole="Car" ToRole="CarModels" />
+          <NavigationProperty Name="CarMake" Relationship="Self.FK_Car_ToTable" FromRole="Car" ToRole="CarMakes" />
+          <NavigationProperty Name="Colour" Relationship="Self.FK_Car_ToTable_1" FromRole="Car" ToRole="Colour" />
+        </EntityType>
+        <EntityType Name="CarMake">
+          <Key>
+            <PropertyRef Name="MakeID" />
+          </Key>
+          <Property Name="MakeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MakeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cars" Relationship="Self.FK_Car_ToTable" FromRole="CarMakes" ToRole="Car" />
+        </EntityType>
+        <EntityType Name="CarModel">
+          <Key>
+            <PropertyRef Name="ModelID" />
+          </Key>
+          <Property Name="ModelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModelName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cars" Relationship="Self.FK_Car_CarModel" FromRole="CarModels" ToRole="Car" />
+        </EntityType>
+        <EntityType Name="Colour">
+          <Key>
+            <PropertyRef Name="ColourID" />
+          </Key>
+          <Property Name="ColourID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ColourName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cars" Relationship="Self.FK_Car_ToTable_1" FromRole="Colour" ToRole="Car" />
+        </EntityType>
+        <Association Name="FK_Car_CarModel">
+          <End Role="CarModels" Type="Self.CarModel" Multiplicity="1" />
+          <End Role="Car" Type="Self.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarModels">
+              <PropertyRef Name="ModelID" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="C_fk_CarModel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Car_ToTable">
+          <End Role="CarMakes" Type="Self.CarMake" Multiplicity="1" />
+          <End Role="Car" Type="Self.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarMakes">
+              <PropertyRef Name="MakeID" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="C_fk_CarMake" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Car_ToTable_1">
+          <End Role="Colour" Type="Self.Colour" Multiplicity="1" />
+          <End Role="Car" Type="Self.Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Colour">
+              <PropertyRef Name="ColourID" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="C_fk_CarColour" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CarManagerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cars" EntityType="Self.Car" />
+          <EntitySet Name="CarMakes" EntityType="Self.CarMake" />
+          <EntitySet Name="CarModels" EntityType="Self.CarModel" />
+          <EntitySet Name="Colours" EntityType="Self.Colour" />
+          <AssociationSet Name="FK_Car_CarModel" Association="Self.FK_Car_CarModel">
+            <End Role="CarModels" EntitySet="CarModels" />
+            <End Role="Car" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Car_ToTable" Association="Self.FK_Car_ToTable">
+            <End Role="CarMakes" EntitySet="CarMakes" />
+            <End Role="Car" EntitySet="Cars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Car_ToTable_1" Association="Self.FK_Car_ToTable_1">
+            <End Role="Colour" EntitySet="Colours" />
+            <End Role="Car" EntitySet="Cars" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CarManagerModelStoreContainer" CdmEntityContainer="CarManagerEntities">
+          <EntitySetMapping Name="Cars">
+            <EntityTypeMapping TypeName="CarManagerModel.Car">
+              <MappingFragment StoreEntitySet="Car">
+                <ScalarProperty Name="CarID" ColumnName="CarID" />
+                <ScalarProperty Name="C_fk_CarModel" ColumnName="_fk_CarModel" />
+                <ScalarProperty Name="C_fk_CarMake" ColumnName="_fk_CarMake" />
+                <ScalarProperty Name="C_fk_CarColour" ColumnName="_fk_CarColour" />
+                <ScalarProperty Name="CarEngine" ColumnName="CarEngine" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarMakes">
+            <EntityTypeMapping TypeName="CarManagerModel.CarMake">
+              <MappingFragment StoreEntitySet="CarMakes">
+                <ScalarProperty Name="MakeID" ColumnName="MakeID" />
+                <ScalarProperty Name="MakeName" ColumnName="MakeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarModels">
+            <EntityTypeMapping TypeName="CarManagerModel.CarModel">
+              <MappingFragment StoreEntitySet="CarModels">
+                <ScalarProperty Name="ModelID" ColumnName="ModelID" />
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Colours">
+            <EntityTypeMapping TypeName="CarManagerModel.Colour">
+              <MappingFragment StoreEntitySet="Colour">
+                <ScalarProperty Name="ColourID" ColumnName="ColourID" />
+                <ScalarProperty Name="ColourName" ColumnName="ColourName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

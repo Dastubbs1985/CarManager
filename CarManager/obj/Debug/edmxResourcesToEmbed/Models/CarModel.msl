@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CarManagerModelStoreContainer" CdmEntityContainer="CarManagerEntities">
+    <EntitySetMapping Name="Cars">
+      <EntityTypeMapping TypeName="CarManagerModel.Car">
+        <MappingFragment StoreEntitySet="Car">
+          <ScalarProperty Name="CarID" ColumnName="CarID" />
+          <ScalarProperty Name="C_fk_CarModel" ColumnName="_fk_CarModel" />
+          <ScalarProperty Name="C_fk_CarMake" ColumnName="_fk_CarMake" />
+          <ScalarProperty Name="C_fk_CarColour" ColumnName="_fk_CarColour" />
+          <ScalarProperty Name="CarEngine" ColumnName="CarEngine" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarMakes">
+      <EntityTypeMapping TypeName="CarManagerModel.CarMake">
+        <MappingFragment StoreEntitySet="CarMakes">
+          <ScalarProperty Name="MakeID" ColumnName="MakeID" />
+          <ScalarProperty Name="MakeName" ColumnName="MakeName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarModels">
+      <EntityTypeMapping TypeName="CarManagerModel.CarModel">
+        <MappingFragment StoreEntitySet="CarModels">
+          <ScalarProperty Name="ModelID" ColumnName="ModelID" />
+          <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Colours">
+      <EntityTypeMapping TypeName="CarManagerModel.Colour">
+        <MappingFragment StoreEntitySet="Colour">
+          <ScalarProperty Name="ColourID" ColumnName="ColourID" />
+          <ScalarProperty Name="ColourName" ColumnName="ColourName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
